@@ -13,4 +13,19 @@ public class Town {
   protected String nameOfTown;
   protected Town nextTownInList;
   
+  public Town(String nameOfTown){
+    this.nameOfTown = nameOfTown;
+  }
+  
+  public int addTown(Town town){
+    
+    if (this.nextTownInList !=null) {
+      nextTownInList.addTown(town);
+    } else {
+      nextTownInList = town;
+    }
+    
+    return 1;
+  }
+  
 }

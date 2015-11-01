@@ -66,5 +66,40 @@ public class DirectedGraph {
     this.firstRouteInList = firstRouteInList;
     return 1;
   }
+
   
+  
+  public int distanceOfRoute(String input){
+    
+    String[] splitInput = input.split("-");
+    Route firstRouteInInput;
+    int distance = 0;
+    boolean routeFound;
+    
+    for (int i=0; i<splitInput.length - 1; i++) {
+      
+      firstRouteInInput = firstRouteInList;
+      routeFound = false;
+      
+      //..this block below can be simplified with a HashTable. find matching
+      //route from list
+      do{
+        if (splitInput[i].equals(firstRouteInInput.startTown) && 
+                splitInput[i+1].equals(firstRouteInInput.endTown)){
+          distance += firstRouteInInput.distanceOfRoute;
+          routeFound = true;
+          break;
+        }
+      } while((firstRouteInInput = firstRouteInInput.nextRouteInList) != null);
+      if (!routeFound){
+        return -1;
+      }
+    }
+    
+    return distance;
+  }
+  
+  public int numberOfTripsWithMaxNStops(String startTown, String endTown){
+    return 1;
+  }
 }

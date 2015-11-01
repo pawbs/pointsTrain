@@ -55,6 +55,13 @@ public class DirectedGraphTest {
     testGraph.addRoutesWithCodedString("AB5, BC4, CD8, DC8, DE6, AD5, CE2, EB3, AE7");
     //testGraph.addRoutesWithCodedString("AB5, BC4, CD8, DC8, DE6, AD5, CE2, EB3, AEA");
     
+    testGraph.distanceOfRoute("A-B-C");
+    testGraph.distanceOfRoute("A-D");
+    testGraph.distanceOfRoute("A-D-C");
+    testGraph.distanceOfRoute("A-E-B-C-D");
+    testGraph.distanceOfRoute("A-E-D");
+    
+    
     assert(true);
   }
   

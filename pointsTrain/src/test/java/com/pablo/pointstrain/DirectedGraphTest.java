@@ -61,6 +61,12 @@ public class DirectedGraphTest {
     testGraph.distanceOfRoute("A-E-B-C-D");
     testGraph.distanceOfRoute("A-E-D");
     
+    testGraph.numberOfTripsWithMaxNStops("C", "C", 3);
+    System.out.println("herpderp");
+    testGraph.numberOfTripsWithExactlyNStops("A", "C", 4);
+    System.out.println("herpderp");
+    testGraph.numberOfTripsWithDistanceLessThanN("C", "C", 30);
+
     
     assert(true);
   }

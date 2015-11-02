@@ -92,14 +92,84 @@ public class DirectedGraph {
         }
       } while((firstRouteInInput = firstRouteInInput.nextRouteInList) != null);
       if (!routeFound){
+        LOGGER.info("Destination not reached, no possible route found");
         return -1;
       }
     }
     
+    LOGGER.info("Destination Reached, distance is..: " + distance);
     return distance;
   }
   
-  public int numberOfTripsWithMaxNStops(String startTown, String endTown){
+  public int numberOfTripsWithMaxNStops(String startTown, String endTown, int maxNStops) {
+    return numberOfTrips(startTown, endTown, maxNStops, true, false, false, "");
+  }
+  
+  public int numberOfTripsWithExactlyNStops(String startTown, String endTown, int maxNStops) {
+    return numberOfTrips(startTown, endTown, maxNStops, false, false, false, "");
+  }
+  
+  public int numberOfTripsWithDistanceLessThanN(String startTown, String endTown, int maxNDistance) {
+    return numberOfTrips(startTown, endTown, maxNDistance, true, true, true, "");
+  }
+  
+  public int numberOfTrips(String startTown, String endTown, int maxN, boolean calculateMax, boolean useDistance, boolean lessThan, String pathHistory){
+    
+    Route firstRouteInInput;
+    int distance;
+    int count = 0;
+    
+    if (maxN <= 0) {
+      //reached the end
+      return 0;
+    }
+    
+    firstRouteInInput = firstRouteInList;
+    do {
+      if (startTown.equals(firstRouteInInput.startTown)){
+        
+        if (useDistance){
+          distance = firstRouteInInput.distanceOfRoute;
+        }
+        else {
+          //we are counting stops, each edge has a weight of 1
+          distance = 1;
+        }
+        if (endTown.equals(firstRouteInInput.endTown)){
+          //reached destination
+          
+          
+          if (calculateMax){
+            if (!lessThan){
+              if (maxN >= distance){
+                LOGGER.info("Destination Reached: " + pathHistory + startTown + endTown);
+                count++;
+              }
+            }
+            else {
+              if (maxN > distance){
+                LOGGER.info("Destination Reached: " + pathHistory + startTown + endTown);
+                count++;
+              }
+            }
+          }
+          else {
+            if (maxN == distance) {
+              LOGGER.info("Destination Reached: " + pathHistory + startTown + endTown);
+              count ++;
+            }
+          }
+        }
+        
+        //move to next node
+        count += numberOfTrips(firstRouteInInput.endTown, endTown, maxN - distance, calculateMax, useDistance, lessThan, pathHistory + startTown);
+      }
+    } while ((firstRouteInInput = firstRouteInInput.nextRouteInList) != null);
+    
+    return count;
+  }
+  
+  public int distanceOfShortestRoute(){
     return 1;
   }
 }

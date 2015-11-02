@@ -1,17 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.pablo.pointstrain;
 
 /**
  * Used for (8) and (9) to implement node-list and visited list via 
  * Dijkstra's Algorithm
- * source: https://www.youtube.com/watch?v=gdmfOwyQlcI
  * @author pawBs
  */
 public class Town {
+
   protected String nameOfTown;
   protected Town nextTownInList;
   protected int neighborDistance;
@@ -43,6 +38,11 @@ public class Town {
     isVisited = false;
   }
   
+  /**
+   * Implementing an arraylist here would prevent the null check
+   * @param town
+   * @return
+   */
   public int addTown(Town town){
     
     if (this.nextTownInList !=null) {
@@ -63,6 +63,12 @@ public class Town {
     return 1;
   }
   
+  /**
+   *
+   * @param searchName
+   * @return
+   * True if found otherwise false
+   */
   public boolean findTownByName(String searchName){
     if (this.nameOfTown.equals(searchName)) {
       return true;
@@ -75,6 +81,12 @@ public class Town {
     }
   }
   
+  /**
+   *
+   * @param searchName
+   * @return
+   * Town if found, otherwise null object
+   */
   public Town getTownByName(String searchName){
     if (this.nameOfTown.equals(searchName)) {
       return this;

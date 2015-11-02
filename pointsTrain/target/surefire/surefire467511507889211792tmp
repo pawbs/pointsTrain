@@ -1,0 +1,23 @@
+#surefire
+#Mon Nov 02 00:31:36 EST 2015
+testClassesDirectory=D\:\\java\\points_train\\pointsTrain\\target\\test-classes
+classPathUrl.4=C\:\\Users\\pawBs\\.m2\\repository\\org\\hamcrest\\hamcrest-core\\1.3\\hamcrest-core-1.3.jar
+forkMode=once
+classPathUrl.3=C\:\\Users\\pawBs\\.m2\\repository\\junit\\junit\\4.12\\junit-4.12.jar
+classPathUrl.2=C\:\\Users\\pawBs\\.m2\\repository\\log4j\\log4j\\1.2.17\\log4j-1.2.17.jar
+useManifestOnlyJar=true
+classPathUrl.1=D\:\\java\\points_train\\pointsTrain\\target\\classes
+classPathUrl.0=D\:\\java\\points_train\\pointsTrain\\target\\test-classes
+reportsDirectory=D\:\\java\\points_train\\pointsTrain\\target\\surefire-reports
+providerConfiguration=org.apache.maven.surefire.junit4.JUnit4Provider
+testSuiteDefinitionTestSourceDirectory=D\:\\java\\points_train\\pointsTrain\\src\\test\\java
+requestedTest=com.pablo.pointstrain.DirectedGraphTest
+surefireClassPathUrl.1=C\:\\Users\\pawBs\\.m2\\repository\\org\\apache\\maven\\surefire\\surefire-api\\2.10\\surefire-api-2.10.jar
+surefireClassPathUrl.0=C\:\\Users\\pawBs\\.m2\\repository\\org\\apache\\maven\\surefire\\surefire-junit4\\2.10\\surefire-junit4-2.10.jar
+runOrder=filesystem
+useSystemClassLoader=true
+isTrimStackTrace=true
+enableAssertions=true
+failIfNoTests=true
+includes0=**/com/pablo/pointstrain/DirectedGraphTest.java
+childDelegation=false

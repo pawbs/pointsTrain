@@ -1,0 +1,8 @@
+#surefire
+#Mon Nov 02 00:31:36 EST 2015
+maven.ext.class.path=D\:\\Program Files (x86)\\NetBeans 8.0.2\\java\\maven-nblib\\netbeans-eventspy.jar
+user.dir=D\:\\java\\points_train\\pointsTrain
+file.encoding=UTF-8
+localRepository=C\:\\Users\\pawBs\\.m2\\repository
+basedir=D\:\\java\\points_train\\pointsTrain
+test=com.pablo.pointstrain.DirectedGraphTest

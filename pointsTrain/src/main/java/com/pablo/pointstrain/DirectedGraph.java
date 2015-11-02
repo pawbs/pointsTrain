@@ -14,7 +14,6 @@ import org.apache.log4j.Logger;
 public class DirectedGraph {
   
   private final Logger LOGGER = Logger.getLogger(this.getClass());
-  
   /**
    * Linked list of routes fed by the user to create the directed graph. 
    * "firstRouteInList" contains the first node, and links to other nodes.
@@ -270,12 +269,17 @@ public class DirectedGraph {
    * letter representing start town
    * @param endTown
    * letter representing destination town
+   * @param ignoreOriginFirstIter
+   * Special case for Q9. In this scenario, the user wants to find a loop to
+   * return to his origin. In this case, the algorithm will return "route not
+   * found". This option changes the algorithm to "unvisit" the origin after
+   * leaving, thus it will attempt to find a way to return to the origin
    * @return
    * return -1: route not found
    * otherwise, returns integer representing the distance between the start
    * and end towns.
    */
-  public int distanceOfShortestRoute(String startTown, String endTown){
+  public int distanceOfShortestRoute(String startTown, String endTown, boolean ignoreOriginFirstIter){
     
     //Setup visited-towns list, initialize start point to 0
     Town visitedTowns = new Town();
@@ -318,8 +322,18 @@ public class DirectedGraph {
 
         }
       } while ((firstRouteInInput = firstRouteInInput.nextRouteInList) != null);
-      visitedTowns.getTownByName(nameOfCurrentTown).setIsVisited(true);
       
+      //special case.. see javadoc for scenario
+      //if this is the first iteration, then mark the start location as
+      //unvisited and reset the neighbor distance. (Thus the algorithm begins
+      //to search for a way back to the origin
+      //..-otherwise, proceed as normal and mark this city as visited.
+      if (!ignoreOriginFirstIter){
+        visitedTowns.getTownByName(nameOfCurrentTown).setIsVisited(true);
+      }
+      else {
+        visitedTowns.getTownByName(nameOfCurrentTown).setNeighborDistance(Integer.MAX_VALUE);
+      }
       //get next lowest un-visited town
       candidateTowns = visitedTowns;
       lowestTown = "notFound";

@@ -5,11 +5,17 @@
  */
 package com.pablo.pointstrain;
 
+import java.util.Collections;
+import java.util.List;
+import org.apache.log4j.Level;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.Ignore;
 import static org.junit.Assert.*;
 
 /**
@@ -17,6 +23,8 @@ import static org.junit.Assert.*;
  * @author pawBs
  */
 public class DirectedGraphTest {
+  
+  private final Logger LOGGER = Logger.getLogger(this.getClass());
   
   public DirectedGraphTest() {
   }
@@ -37,9 +45,13 @@ public class DirectedGraphTest {
   public void tearDown() {
   }
 
+  /**
+   * Tests that I ran while i developed the application. comment out ignore to
+   * try them
+   */
+  @Ignore
   @Test
-  public void testSomeMethod() {
-    // TODO review the generated test code and remove the default call to fail.
+  public void developmentTests() {
     DirectedGraph testGraph = new DirectedGraph();
     
     /*testGraph.addTown(new Town("A"));
@@ -62,14 +74,47 @@ public class DirectedGraphTest {
     testGraph.distanceOfRoute("A-E-D");
     
     testGraph.numberOfTripsWithMaxNStops("C", "C", 3);
-    System.out.println("herpderp");
+    System.out.println("========");
     testGraph.numberOfTripsWithExactlyNStops("A", "C", 4);
-    System.out.println("herpderp");
+    System.out.println("========");
     testGraph.numberOfTripsWithDistanceLessThanN("C", "C", 30);
-    System.out.println("herpderp"); 
-    int result = testGraph.distanceOfShortestRoute("A", "C");
+    System.out.println("========"); 
+    int result = testGraph.distanceOfShortestRoute("A", "C", false);
     
     assert(true);
   }
   
+  @Test
+  public void mainTest() {
+    List<Logger> loggers = Collections.<Logger>list(LogManager.getCurrentLoggers());
+    loggers.add(LogManager.getRootLogger());
+    for ( Logger logger : loggers ) {
+        logger.setLevel(Level.INFO);
+        //logger.setLevel(Level.DEBUG);
+    }
+    int result;
+    DirectedGraph testGraph = new DirectedGraph();
+    testGraph.addRoutesWithCodedString("AB5, BC4, CD8, DC8, DE6, "
+            + "AD5, CE2, EB3, AE7");
+    
+    
+    LOGGER.info("Output #1: " + testGraph.distanceOfRoute("A-B-C"));
+    LOGGER.info("Output #2: " + testGraph.distanceOfRoute("A-D"));
+    LOGGER.info("Output #3: " + testGraph.distanceOfRoute("A-D-C"));
+    LOGGER.info("Output #4: " + testGraph.distanceOfRoute("A-E-B-C-D"));
+    
+    //LOGGER.info("Output #5: " + testGraph.distanceOfRoute("A-E-D"));
+    result = testGraph.distanceOfRoute("A-E-D");
+    assert(result == -1);
+    LOGGER.info("Output #5: NO SUCH ROUTE");
+    
+    LOGGER.info("Output #6: " + testGraph.numberOfTripsWithMaxNStops("C", "C", 3));
+    LOGGER.info("Output #7: " + testGraph.numberOfTripsWithExactlyNStops("A", "C", 4));
+    LOGGER.info("Output #8: " + testGraph.distanceOfShortestRoute("A", "C", false));
+    LOGGER.info("Output #9: " + testGraph.distanceOfShortestRoute("B", "B", true));
+    LOGGER.info("Output #10: " + testGraph.numberOfTripsWithDistanceLessThanN("C", "C", 30));
+    LOGGER.info("==========");
+            
+    
+  }
 }

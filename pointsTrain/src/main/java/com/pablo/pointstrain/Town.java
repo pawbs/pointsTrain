@@ -17,7 +17,7 @@ public class Town {
   protected int neighborDistance;
   protected boolean isVisited;
 
-  public boolean isIsVisited() {
+  public boolean isVisited() {
     return isVisited;
   }
 
@@ -33,6 +33,9 @@ public class Town {
     this.neighborDistance = neighborDistance;
   }
   
+  public Town() {
+    //nullobject constructor
+  }
   
   public Town(String nameOfTown){
     this.nameOfTown = nameOfTown;
@@ -42,14 +45,19 @@ public class Town {
   
   public int addTown(Town town){
     
-    if (this.findTownByName(town.nameOfTown)){
-      return 1;
-    }
-    
     if (this.nextTownInList !=null) {
+      if (this.findTownByName(town.nameOfTown)){
+        return 1;
+      }
       nextTownInList.addTown(town);
     } else {
-      nextTownInList = town;
+      if (this.nameOfTown != null){
+        nextTownInList = town;
+      } else {
+        this.nameOfTown = town.nameOfTown;
+        this.neighborDistance = Integer.MAX_VALUE;
+        isVisited = false;
+      }
     }
     
     return 1;

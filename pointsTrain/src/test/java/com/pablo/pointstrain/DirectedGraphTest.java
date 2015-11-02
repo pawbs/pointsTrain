@@ -67,7 +67,7 @@ public class DirectedGraphTest {
     System.out.println("herpderp");
     testGraph.numberOfTripsWithDistanceLessThanN("C", "C", 30);
     System.out.println("herpderp"); 
-    testGraph.distanceOfShortestRoute("A", "C");
+    int result = testGraph.distanceOfShortestRoute("A", "C");
     
     assert(true);
   }

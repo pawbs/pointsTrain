@@ -163,9 +163,11 @@ public class DirectedGraph {
   public int distanceOfShortestRoute(String startTown, String endTown){
     
     //Setup visited-towns list, initialize start point to 0
-    Town visitedTowns = new Town(startTown);
+    Town visitedTowns = new Town();
     Town candidateTowns;
-    visitedTowns.neighborDistance = 0;
+    String lowestTown;
+    int lowestTownValue;
+    visitedTowns.addTown(new Town(startTown));
     visitedTowns.addTown(new Town(endTown));
     
     
@@ -174,26 +176,53 @@ public class DirectedGraph {
     firstRouteInInput = firstRouteInList;
     do {
       visitedTowns.addTown(new Town(firstRouteInInput.startTown));
+      visitedTowns.neighborDistance = 0;
       visitedTowns.addTown(new Town(firstRouteInInput.endTown));
     } while ((firstRouteInInput = firstRouteInInput.nextRouteInList) != null);
     
 
+    //start with initial node
     String nameOfCurrentTown = startTown;
     
-    firstRouteInInput = firstRouteInList;
     do {
-      if (firstRouteInInput.startTown.equals(nameOfCurrentTown)){
-        
-        if (visitedTowns.getTownByName(firstRouteInInput.endTown).getNeighborDistance() > firstRouteInInput.distanceOfRoute) {
-          visitedTowns.getTownByName(firstRouteInInput.endTown).setNeighborDistance(firstRouteInInput.distanceOfRoute);
+      firstRouteInInput = firstRouteInList;
+      do {
+        if (firstRouteInInput.startTown.equals(nameOfCurrentTown)){
+
+          //update neighboring towns
+          if (visitedTowns.getTownByName(firstRouteInInput.endTown).getNeighborDistance() > firstRouteInInput.distanceOfRoute + visitedTowns.getTownByName(nameOfCurrentTown).getNeighborDistance()) {
+            visitedTowns.getTownByName(firstRouteInInput.endTown).setNeighborDistance(firstRouteInInput.distanceOfRoute + visitedTowns.getTownByName(nameOfCurrentTown).getNeighborDistance());
+            LOGGER.debug("set town " + firstRouteInInput.endTown);
+            LOGGER.debug(visitedTowns.getTownByName(firstRouteInInput.endTown).getNeighborDistance());
+          }
+
         }
-        
-        
-        
+      } while ((firstRouteInInput = firstRouteInInput.nextRouteInList) != null);
+      visitedTowns.getTownByName(nameOfCurrentTown).setIsVisited(true);
+      
+      //get next lowest un-visited town
+      candidateTowns = visitedTowns;
+      lowestTown = "notFound";
+      lowestTownValue=Integer.MAX_VALUE;
+      do {
+        if (!candidateTowns.isVisited && candidateTowns.neighborDistance < lowestTownValue){
+          lowestTownValue = candidateTowns.neighborDistance;
+          lowestTown = candidateTowns.nameOfTown;
+        }
+      } while ((candidateTowns = candidateTowns.nextTownInList) != null);
+      
+      if (lowestTown.equals("notFound")) {
+        LOGGER.error("Route not found");
+        return -1;
+      } else if (lowestTown.equals(endTown)) {
+        break;
       }
-    } while ((firstRouteInInput = firstRouteInInput.nextRouteInList) != null);
-    visitedTowns.setIsVisited(true);
+      else {
+        nameOfCurrentTown = lowestTown;
+      }
+    } while (true);
     
-    return 1;
+    LOGGER.debug("shortest trip: " + visitedTowns.getTownByName(endTown).getNeighborDistance());
+    return visitedTowns.getTownByName(endTown).getNeighborDistance();
   }
 }

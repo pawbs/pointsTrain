@@ -102,6 +102,15 @@ public class DirectedGraph {
     int distance = 0;
     boolean routeFound;
     
+    //directedGraph not initialized
+    if (firstRouteInList == null) {
+      return -1;
+    }
+    
+    if (splitInput.length <= 1) {
+      return -1;
+    }
+    
     for (int i=0; i<splitInput.length - 1; i++) {
       
       firstRouteInInput = firstRouteInList;
@@ -195,6 +204,11 @@ public class DirectedGraph {
     Route firstRouteInInput;
     int distance;
     int count = 0;
+    
+    //directedGraph not initialized
+    if (firstRouteInList == null) {
+      return -1;
+    }
     
     if (maxN <= 0) {
       //reached the end
@@ -291,6 +305,10 @@ public class DirectedGraph {
     
     
     Route firstRouteInInput;
+    //directedGraph not initialized
+    if (firstRouteInList == null) {
+      return -1;
+    }
     
     firstRouteInInput = firstRouteInList;
     do {

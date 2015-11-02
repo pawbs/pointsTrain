@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.pablo.pointstrain.DirectedGraphTest
 -------------------------------------------------------------------------------
-Tests run: 2, Failures: 0, Errors: 0, Skipped: 1, Time elapsed: 0.106 sec
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 1, Time elapsed: 0.098 sec

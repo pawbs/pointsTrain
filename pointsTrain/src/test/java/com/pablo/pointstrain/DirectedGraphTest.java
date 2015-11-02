@@ -84,6 +84,9 @@ public class DirectedGraphTest {
     assert(true);
   }
   
+  /**
+   *
+   */
   @Test
   public void mainTest() {
     List<Logger> loggers = Collections.<Logger>list(LogManager.getCurrentLoggers());
@@ -115,6 +118,36 @@ public class DirectedGraphTest {
     LOGGER.info("Output #10: " + testGraph.numberOfTripsWithDistanceLessThanN("C", "C", 30));
     LOGGER.info("==========");
             
+    
+  }
+  
+  /**
+   * Error handling testcases here
+   */
+  @Ignore
+  @Test
+  public void sanitizeInputs() {
+    
+    List<Logger> loggers = Collections.<Logger>list(LogManager.getCurrentLoggers());
+    loggers.add(LogManager.getRootLogger());
+    for ( Logger logger : loggers ) {
+        //logger.setLevel(Level.DEBUG);
+        logger.setLevel(Level.INFO);
+    }
+    
+    DirectedGraph testGraph = new DirectedGraph();
+    testGraph.addRoutesWithCodedString("AB5, BC4, CD8, DC8, DE6, "
+            + "AD5, CE2, EB3, AE7");
+    
+    assert(testGraph.distanceOfRoute("asdfasdf") == -1);
+    assert(testGraph.distanceOfRoute("") == -1);
+    
+    DirectedGraph emptyTestGraph = new DirectedGraph();
+    testGraph.addRoutesWithCodedString("");
+    assert(emptyTestGraph.distanceOfRoute("asdfasdf") == -1);
+    assert(emptyTestGraph.distanceOfRoute("A-B-C") == -1);
+    assert(emptyTestGraph.numberOfTripsWithExactlyNStops("A", "C", 4) == -1);
+    assert(emptyTestGraph.distanceOfShortestRoute("A", "C", false) == -1);
     
   }
 }

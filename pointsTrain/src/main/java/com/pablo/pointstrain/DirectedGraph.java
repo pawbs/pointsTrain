@@ -16,18 +16,8 @@ public class DirectedGraph {
   private final Logger LOGGER = Logger.getLogger(this.getClass());
   
   protected Route firstRouteInList;
-  protected Town firstTownInList;
   
   public DirectedGraph(){
-  }
-  
-  public int addTown(Town town) {
-    if (this.firstTownInList !=null) {
-      this.firstTownInList.addTown(town);
-    } else {
-      this.firstTownInList = town;
-    }
-    return 1;
   }
   
   public int addRoute(Route route) {
@@ -92,12 +82,12 @@ public class DirectedGraph {
         }
       } while((firstRouteInInput = firstRouteInInput.nextRouteInList) != null);
       if (!routeFound){
-        LOGGER.info("Destination not reached, no possible route found");
+        LOGGER.debug("Destination not reached, no possible route found");
         return -1;
       }
     }
     
-    LOGGER.info("Destination Reached, distance is..: " + distance);
+    LOGGER.debug("Destination Reached, distance is..: " + distance);
     return distance;
   }
   
@@ -136,32 +126,33 @@ public class DirectedGraph {
           distance = 1;
         }
         if (endTown.equals(firstRouteInInput.endTown)){
-          //reached destination
+          //reached destination, whether we should increment depends on some of
+          //the options
           
           
           if (calculateMax){
             if (!lessThan){
               if (maxN >= distance){
-                LOGGER.info("Destination Reached: " + pathHistory + startTown + endTown);
+                LOGGER.debug("Destination Reached: " + pathHistory + startTown + endTown);
                 count++;
               }
             }
             else {
               if (maxN > distance){
-                LOGGER.info("Destination Reached: " + pathHistory + startTown + endTown);
+                LOGGER.debug("Destination Reached: " + pathHistory + startTown + endTown);
                 count++;
               }
             }
           }
           else {
             if (maxN == distance) {
-              LOGGER.info("Destination Reached: " + pathHistory + startTown + endTown);
+              LOGGER.debug("Destination Reached: " + pathHistory + startTown + endTown);
               count ++;
             }
           }
         }
         
-        //move to next node
+        //recursion: move to next node
         count += numberOfTrips(firstRouteInInput.endTown, endTown, maxN - distance, calculateMax, useDistance, lessThan, pathHistory + startTown);
       }
     } while ((firstRouteInInput = firstRouteInInput.nextRouteInList) != null);
@@ -169,7 +160,40 @@ public class DirectedGraph {
     return count;
   }
   
-  public int distanceOfShortestRoute(){
+  public int distanceOfShortestRoute(String startTown, String endTown){
+    
+    //Setup visited-towns list, initialize start point to 0
+    Town visitedTowns = new Town(startTown);
+    Town candidateTowns;
+    visitedTowns.neighborDistance = 0;
+    visitedTowns.addTown(new Town(endTown));
+    
+    
+    Route firstRouteInInput;
+    
+    firstRouteInInput = firstRouteInList;
+    do {
+      visitedTowns.addTown(new Town(firstRouteInInput.startTown));
+      visitedTowns.addTown(new Town(firstRouteInInput.endTown));
+    } while ((firstRouteInInput = firstRouteInInput.nextRouteInList) != null);
+    
+
+    String nameOfCurrentTown = startTown;
+    
+    firstRouteInInput = firstRouteInList;
+    do {
+      if (firstRouteInInput.startTown.equals(nameOfCurrentTown)){
+        
+        if (visitedTowns.getTownByName(firstRouteInInput.endTown).getNeighborDistance() > firstRouteInInput.distanceOfRoute) {
+          visitedTowns.getTownByName(firstRouteInInput.endTown).setNeighborDistance(firstRouteInInput.distanceOfRoute);
+        }
+        
+        
+        
+      }
+    } while ((firstRouteInInput = firstRouteInInput.nextRouteInList) != null);
+    visitedTowns.setIsVisited(true);
+    
     return 1;
   }
 }
